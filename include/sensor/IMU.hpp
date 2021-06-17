@@ -19,6 +19,7 @@ public:
 	static void init (void);
 	static void read (bool calibrated);
 	static void showData (void);
+	static void recordRaw (bool longGesture);
 };
 
 #endif

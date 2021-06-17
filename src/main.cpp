@@ -12,7 +12,7 @@ void loop ()
 	Action::detectHandGesture();
 	Control::sendCommand();
 	//IMU::showData();
-	//Orientation::showOrientation();
+	Orientation::showOrientation();
 	//Interface::leds[0] = CRGB::Green;
 	FastLED.show();
 }

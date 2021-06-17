@@ -32,12 +32,14 @@ void Interface::readButtons (void)
 		if (buttons[0]) {
 			if (pressTime[0] != LONG_MAX - 1) {
 				btnPressed[0] = false;
-				Serial.println("first button pressed");
+				//IMU::recordRaw(true);
+				Control::enableCommands = !Control::enableCommands;
+				Interface::leds[1] = Control::enableCommands ? CRGB::Green : CRGB::Yellow;
 				pressTime[0] = LONG_MAX;
 			}
 		}
 		else if ((millis() > pressTime[0]) && (millis() - pressTime[0] > LONG_PRESS_DURATION)) {
-			Calibration::performCalibration();
+			//Calibration::performCalibration();
 			pressTime[0] = LONG_MAX - 1;
 			btnPressed[0] = false;
 		}
@@ -47,13 +49,13 @@ void Interface::readButtons (void)
 		if (buttons[1]) {
 			if (pressTime[1] != LONG_MAX - 1) {
 				btnPressed[1] = false;
-				Control::enableCommands = !Control::enableCommands;
-				Interface::leds[1] = Control::enableCommands ? CRGB::Green : CRGB::Yellow;
+				//IMU::recordRaw(false);
+				Control::switchHost();
 				pressTime[1] = LONG_MAX;
 			}
 		}
 		else if ((millis() > pressTime[1]) && (millis() - pressTime[1] > LONG_PRESS_DURATION)) {
-			UserPrefs::resetEEPROM();
+			//UserPrefs::resetEEPROM();
 			pressTime[1] = LONG_MAX - 1;
 			btnPressed[1] = false;
 		}

@@ -60,9 +60,11 @@ void IMU::read (bool calibrated)
 		IMU::gyr.y = gy - Calibration::data.gyrOffset.y;
 		IMU::gyr.z = gz - Calibration::data.gyrOffset.z;
 
+		/*
 		if (abs(IMU::gyr.x) < Calibration::data.gyrThreshold) IMU::gyr.x = 0.0;
 		if (abs(IMU::gyr.y) < Calibration::data.gyrThreshold) IMU::gyr.y = 0.0;
 		if (abs(IMU::gyr.z) < Calibration::data.gyrThreshold) IMU::gyr.z = 0.0;
+		*/
 	}
 	else {
 		IMU::acc.x = ax;
@@ -84,17 +86,47 @@ void IMU::read (bool calibrated)
 
 void IMU::showData (void)
 {
-	Serial.print("ACC: x: ");
-	Serial.print(IMU::acc.x);
-	Serial.print(" y: ");
-	Serial.print(IMU::acc.y);
-	Serial.print(" z: ");
-	Serial.println(IMU::acc.z);
+	// Serial.print("ACC: x: ");
+	// Serial.print(IMU::acc.x);
+	// Serial.print(" y: ");
+	// Serial.print(IMU::acc.y);
+	// Serial.print(" z: ");
+	// Serial.println(IMU::acc.z);
 
-	Serial.print("GYR: x: ");
+	// Serial.print("GYR: x: ");
+	// Serial.print(IMU::gyr.x);
+	// Serial.print(" y: ");
+	// Serial.print(IMU::gyr.y);
+	// Serial.print(" z: ");
+	// Serial.println(IMU::gyr.z);
+
+	Serial.print("ACC,");
+	Serial.print(IMU::acc.x);
+	Serial.print(",");
+	Serial.print(IMU::acc.y);
+	Serial.print(",");
+	Serial.print(IMU::acc.z);
+
+	Serial.print(",GYR,");
 	Serial.print(IMU::gyr.x);
-	Serial.print(" y: ");
+	Serial.print(",");
 	Serial.print(IMU::gyr.y);
-	Serial.print(" z: ");
+	Serial.print(",");
 	Serial.println(IMU::gyr.z);
+}
+
+void IMU::recordRaw (bool longGesture)
+{
+	if (longGesture) {
+		Serial.println("BEGIN LONG GESTURE");
+	}
+	else {
+		Serial.println("BEGIN SHORT GESTURE");
+	}
+	unsigned long time = millis();
+	int duration = longGesture ? 1000 : 3000;
+	while (millis() - time < duration) {
+		IMU::read(true);
+		IMU::showData();
+	}
 }

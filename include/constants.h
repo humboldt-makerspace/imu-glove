@@ -68,6 +68,13 @@
 #define DIRECTION_TOLERANCE					0.08
 #define HOLD_TIME							1000
 
+/* rc robot */
+#define SPEED_FLATTEN_EXP					3.0
+#define DEATH_ZONE							0.02
+#define CMD_DRV								"/drive "
+#define M_PI_2								1.570796326794896
+#define M_PI								3.14159265358979
+
 typedef enum directions {
 	HORIZONTAL, UPWARDS, DOWNWARDS, UNKNOWN_DIRECTION
 } Direction;
